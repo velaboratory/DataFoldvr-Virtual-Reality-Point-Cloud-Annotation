@@ -1,0 +1,43 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct _Vertex {
+	float3 position;
+	float4 color;
+	//int layer;
+};
+
+RWStructuredBuffer<_Vertex>  _VertexBuffer;
+StructuredBuffer<float3>     _InitialPositionBuffer;
+StructuredBuffer<float4>     _InitialColorBuffer;
+
+float radius;
+float3 _HandPos;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+
+	//float3 velocity   = _VertexBuffer[id.x].velocity;
+	float3 initialPos = _InitialPositionBuffer[id.x];
+	float4 initialColor = _InitialColorBuffer[id.x];
+
+
+	// -------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Calculations for the right hand
+	float3 vToHand = _VertexBuffer[id.x].position - _HandPos;
+	float  distance = length(vToHand);
+
+	vToHand = normalize(vToHand);
+
+	// -------------------------------------------------------------------------------------------------------------------------------------------------------
+	// The force that brings the pieces back to their original position
+	float3 vToOrig = initialPos - _VertexBuffer[id.x].position;
+
+
+
+	// -------------------------------------------------------------------------------------------------------------------------------------------------------
+	//_VertexBuffer[id.x].position += 0.1f;
+	_VertexBuffer[id.x].color += .1f;
+
+}

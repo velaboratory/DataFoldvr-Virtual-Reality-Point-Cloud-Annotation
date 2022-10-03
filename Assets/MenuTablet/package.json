@@ -1,0 +1,15 @@
+{
+  "name": "com.ntsfranz.menutablet",
+  "displayName": "Menu Tablet",
+  "version": "1.0.0",
+  "unity": "2019.1",
+  "description": "A tablet computer attached to your arm",
+  "keywords": [
+    "virtual reality",
+    "boilerplate",
+    "utilities"
+  ],
+  "dependencies": {
+    "com.franzco.unityutilities": "https://bitbucket.org/AntonFranzluebbers/unityutilities.git"
+  }
+}

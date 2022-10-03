@@ -1,0 +1,57 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "Common.cginc"
+
+RWStructuredBuffer<Point> _PointBuffer;
+RWStructuredBuffer<float> _ClosestPoint; // [3]
+RWStructuredBuffer<int> _ClosestDistance; // [1]
+float3 _CameraPosition; // [3]
+uint closest_distance = 10000000;
+bool _MouseActive;
+float4x4 _CamMatrix;
+float3 _MousePosition;
+float _MouseRadius;
+
+AppendStructuredBuffer<float3> _OutputBuffer;
+
+[numthreads(32,32,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    const Point input = _PointBuffer[id.x * 32 + id.y];
+    const float3 pos = input.position;
+
+    const float3 cam_pos = mul(_CamMatrix, float4(pos, 1)).xyz;
+    const float3 local_pos = cam_pos - _MousePosition;
+
+    const float combined_distance = pow(local_pos.x, 2) + pow(local_pos.y, 2);
+
+    // _ClosestPoint[0] = _CameraPosition.x;
+    // _ClosestPoint[1] = _CameraPosition.y;
+    // _ClosestPoint[2] = _CameraPosition.z;
+
+
+    // if the point is within the radius of the mouse
+    if (combined_distance < _MouseRadius * _MouseRadius)
+    {
+        // const int dist = distance(pos, _CameraPosition) * 10000;
+        // // pow(pos.x - _ClosestPoint[0], 2) +
+        // // pow(pos.y - _ClosestPoint[1], 2) +
+        // // pow(pos.z - _ClosestPoint[2], 2);
+        //
+        // // if (dist < closest_distance || dist == 0)
+        // // if (pos.x > _ClosestPoint[0])
+        // if (_ClosestPoint[0] == 0 || dist < _ClosestDistance[0])
+        // {
+        //     _ClosestPoint[0] = pos.x;
+        //     _ClosestPoint[1] = pos.y;
+        //     _ClosestPoint[2] = pos.z;
+        //     _ClosestPoint[3] = (float)(dist) / 10000;
+        //     InterlockedAdd(_ClosestDistance[0], dist - _ClosestDistance[0]);
+        //     // closest_distance += dist - closest_distance;
+        // }
+
+
+        _OutputBuffer.Append(pos);
+    }
+}

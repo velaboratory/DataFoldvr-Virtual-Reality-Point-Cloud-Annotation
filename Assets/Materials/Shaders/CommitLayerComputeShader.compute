@@ -1,0 +1,32 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "Common.cginc"
+
+RWStructuredBuffer<Point> _PointBuffer;
+bool _Undo;
+
+// layers:
+// 0: default color
+// 1: active red
+// 2: invisible undoable
+// 3: invisible permanent
+
+[numthreads(32,32,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    Point input = _PointBuffer[id.x * 32 + id.y];
+    half4 c = PcxDecodeColorAndLayer(input.color);
+
+    if (_Undo)
+    {
+        if (c.w == 2) c.w -= 1;
+    }
+    else
+    {
+        if (c.w == 1 || c.w == 2) c.w += 1;
+    }
+
+    input.color = PcxEncodeColorAndLayer(c);
+    _PointBuffer[id.x * 32 + id.y].color = input.color;
+}

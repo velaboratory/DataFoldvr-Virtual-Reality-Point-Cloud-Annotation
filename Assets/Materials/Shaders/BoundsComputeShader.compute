@@ -1,0 +1,46 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "Common.cginc"
+
+
+StructuredBuffer<Point> _PointBuffer;
+RWStructuredBuffer<float> _BoundsBuffer; // min xyz, max xyz, sum xyz
+
+[numthreads(32,32,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    const Point input = _PointBuffer[id.x * 32 + id.y];
+    const float3 pos = input.position;
+    
+    // min x
+    if (pos.x < _BoundsBuffer[0])
+    {
+        _BoundsBuffer[0] = pos.x;
+    }
+    // min y
+    if (pos.y < _BoundsBuffer[1])
+    {
+        _BoundsBuffer[1] = pos.y;
+    }
+    // min z
+    if (pos.z < _BoundsBuffer[2])
+    {
+        _BoundsBuffer[2] = pos.z;
+    }
+    // max x
+    if (pos.x > _BoundsBuffer[3])
+    {
+        _BoundsBuffer[3] = pos.x;
+    }
+    //max y
+    if (pos.y > _BoundsBuffer[4])
+    {
+        _BoundsBuffer[4] = pos.y;
+    }
+    // max z
+    if (pos.z > _BoundsBuffer[5])
+    {
+        _BoundsBuffer[5] = pos.z;
+    }
+}

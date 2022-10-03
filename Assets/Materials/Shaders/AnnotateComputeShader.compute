@@ -1,0 +1,46 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "Common.cginc"
+
+
+RWStructuredBuffer<Point> _PointBuffer;
+bool _LeftHandActive;
+bool _RightHandActive;
+bool _MouseActive;
+float3 _LeftHandPosition;
+float3 _RightHandPosition;
+float3 _MousePosition;
+float _LeftHandRadius;
+float _RightHandRadius;
+float _MouseRadius;
+int _LayerIndex;
+
+[numthreads(32,32,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    Point input = _PointBuffer[id.x * 32 + id.y];
+    const float3 pos = input.position;
+    float combinedDistance = min(distance(pos, _RightHandPosition) - _RightHandRadius * _RightHandActive,
+                                       distance(pos, _LeftHandPosition) - _LeftHandRadius * _LeftHandActive);
+
+
+
+    half4 c = PcxDecodeColorAndLayer(input.color);
+
+
+    // makes layer 0 not selectable without another if statement
+    const half layer = c.w;
+    // combinedDistance += (1000 * (1 - clamp(abs(layer - 2), 0, 1)));
+
+
+
+    // if the point is within the radius of a hand 
+    if (combinedDistance < 0 && layer <= 1)
+    {
+        c.w = _LayerIndex;
+    }
+
+    input.color = PcxEncodeColorAndLayer(c);
+    _PointBuffer[id.x * 32 + id.y].color = input.color;
+}

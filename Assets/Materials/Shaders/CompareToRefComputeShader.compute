@@ -1,0 +1,47 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "Common.cginc"
+
+RWStructuredBuffer<Point> _PointBuffer;
+RWStructuredBuffer<uint> _CorrectCount; // [4] tp, fp, tn, fn
+RWStructuredBuffer<float> _MinPoint; // [3]
+
+[numthreads(32,32,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    const Point input = _PointBuffer[id.x * 32 + id.y];
+    const half4 c = PcxDecodeColorAndLayer(input.color);
+    const uint layer = c.w;
+
+    // positives
+    if (layer != 0)
+    {
+        // true positives
+        if (layer == input.ref_layer)
+        {
+            InterlockedAdd(_CorrectCount[0], 1);
+            // _CorrectCount[0]++;
+        }
+        // false positives
+        else
+        {
+            InterlockedAdd(_CorrectCount[1], 1);
+            // _CorrectCount[1]++;
+        }
+    }
+    // negatives
+    else
+    {
+        // true negatives
+        if (layer == input.ref_layer)
+        {
+            InterlockedAdd(_CorrectCount[2], 1);
+        }
+        // false negatives
+        else
+        {
+            InterlockedAdd(_CorrectCount[3], 1);
+        }
+    }
+}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/EnterPath.unity
+    guid: 2a400f821eb7b914a94bfe81b2409508
+  - enabled: 0
+    path: Assets/Scenes/SimpleDesktop2D.unity
+    guid: ffd9637fa88199545b17005f1034b988
+  - enabled: 1
+    path: Assets/Scenes/SimpleDesktopVR.unity
+    guid: 47a91b1e3ca48f74196747b950590035
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 39c4920dd529e724782151c8d6575412, type: 2}
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 19b87fb6ba4a09c439b1e5dbef919f37, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bbc9491f3642671499f2439959071c42, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 77642a802b463fa4a9c61356d298274a, type: 2}
