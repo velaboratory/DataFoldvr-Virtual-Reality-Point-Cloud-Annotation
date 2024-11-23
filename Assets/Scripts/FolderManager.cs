@@ -31,7 +31,7 @@ public class FolderManager : MonoBehaviour
 	{
 		instance = this;
 
-		syncFolder = PlayerPrefsJson.GetString("datafoldvr_path", syncFolder);
+		//syncFolder = PlayerPrefsJson.GetString("datafoldvr_path", syncFolder);
 
 		loadedFiles = new Dictionary<string, VRFile>();
 
@@ -45,6 +45,7 @@ public class FolderManager : MonoBehaviour
 	{
 		while (true)
 		{
+			Debug.Log(syncFolder);
 			string[] files = Directory.GetFileSystemEntries(syncFolder);
 
 			//first check all of our files to see if they are still there (they could have been deleted)
@@ -54,6 +55,7 @@ public class FolderManager : MonoBehaviour
 				// delete removed files from the list
 				if (!files.Contains(kvp.Key))
 				{
+					
 					//delete it
 					kvp.Value.destroy();
 					Destroy(kvp.Value.gameObject);

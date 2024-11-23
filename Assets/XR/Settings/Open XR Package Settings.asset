@@ -63,6 +63,8 @@ MonoBehaviour:
   company: Unity
   priority: 0
   required: 0
+  targetQuest: 1
+  targetQuest2: 1
 --- !u!114 &-7272452519013532696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,7 +101,7 @@ MonoBehaviour:
   nameUi: Mock Runtime
   version: 0.0.2
   featureIdInternal: com.unity.openxr.feature.mockruntime
-  openxrExtensionStrings: XR_UNITY_null_gfx
+  openxrExtensionStrings: XR_UNITY_null_gfx XR_UNITY_android_present
   company: Unity
   priority: 0
   required: 0
@@ -211,6 +213,26 @@ MonoBehaviour:
   required: 0
   cacheSize: 1048576
   perThreadCacheSize: 51200
+--- !u!114 &-2146721271950348627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b862ee14fb479fbfe5fffe655d3ed3, type: 3}
+  m_Name: MetaQuestTouchProControllerProfile Standalone
+  m_EditorClassIdentifier: 
+  m_enabled: 0
+  nameUi: Meta Quest Touch Pro Controller Profile
+  version: 0.0.1
+  featureIdInternal: com.unity.openxr.feature.input.metaquestpro
+  openxrExtensionStrings: XR_FB_touch_controller_pro
+  company: Unity
+  priority: 0
+  required: 0
 --- !u!114 &-1533351246299655763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +269,10 @@ MonoBehaviour:
   - {fileID: 418336797527627793}
   - {fileID: 556199297899047603}
   - {fileID: -7272452519013532696}
+  - {fileID: 1587104339471037083}
+  - {fileID: -995239934182439618}
   - {fileID: 1465746275600735639}
+  - {fileID: 2956535554789421536}
   - {fileID: -7497662219540648761}
   - {fileID: -625335949310694127}
   - {fileID: -2367760547872110489}
@@ -270,6 +295,26 @@ MonoBehaviour:
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.mockdriver
   openxrExtensionStrings: XR_UNITY_mock_driver
+  company: Unity
+  priority: 0
+  required: 0
+--- !u!114 &-995239934182439618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b862ee14fb479fbfe5fffe655d3ed3, type: 3}
+  m_Name: MetaQuestTouchProControllerProfile Android
+  m_EditorClassIdentifier: 
+  m_enabled: 0
+  nameUi: Meta Quest Touch Pro Controller Profile
+  version: 0.0.1
+  featureIdInternal: com.unity.openxr.feature.input.metaquestpro
+  openxrExtensionStrings: XR_FB_touch_controller_pro
   company: Unity
   priority: 0
   required: 0
@@ -369,6 +414,36 @@ MonoBehaviour:
   company: Unity
   priority: 0
   required: 0
+--- !u!114 &1587104339471037083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f647cc0545697264a9878224faada6d5, type: 3}
+  m_Name: MetaQuestFeature Android
+  m_EditorClassIdentifier: 
+  m_enabled: 0
+  nameUi: Meta Quest Support
+  version: 1.0.0
+  featureIdInternal: com.unity.openxr.feature.metaquest
+  openxrExtensionStrings: XR_OCULUS_android_initialize_loader
+  company: Unity
+  priority: 0
+  required: 0
+  targetDevices:
+  - visibleName: Quest
+    manifestName: quest
+    enabled: 1
+  - visibleName: Quest 2
+    manifestName: quest2
+    enabled: 1
+  - visibleName: Quest Pro
+    manifestName: cambria
+    enabled: 1
 --- !u!114 &2184884516120934729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,6 +484,27 @@ MonoBehaviour:
   company: Unity
   priority: 0
   required: 0
+--- !u!114 &2956535554789421536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de993716e042c6499d0c18eed3a773c, type: 3}
+  m_Name: MockRuntime Android
+  m_EditorClassIdentifier: 
+  m_enabled: 0
+  nameUi: Mock Runtime
+  version: 0.0.2
+  featureIdInternal: com.unity.openxr.feature.mockruntime
+  openxrExtensionStrings: XR_UNITY_null_gfx XR_UNITY_android_present
+  company: Unity
+  priority: 0
+  required: 0
+  ignoreValidationErrors: 0
 --- !u!114 &3301748145045835684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,21 +748,15 @@ MonoBehaviour:
   m_Name: Standalone
   m_EditorClassIdentifier: 
   features:
-  - {fileID: -1533351246299655763}
   - {fileID: 7160217502099005724}
   - {fileID: -3783465425363151998}
-  - {fileID: 3301748145045835684}
-  - {fileID: 7812137494640578439}
   - {fileID: 4927417330809788116}
   - {fileID: 2535037681879336178}
+  - {fileID: -2146721271950348627}
   - {fileID: -8633985806240024490}
   - {fileID: 9080793421541521064}
-  - {fileID: -2750072903156957276}
-  - {fileID: -1153052992299067841}
   - {fileID: -6785235843276906590}
-  - {fileID: 3993124506300350014}
   - {fileID: 6337018048048891400}
-  - {fileID: 5594517096722424249}
   - {fileID: -2658679102671241367}
   - {fileID: 4289979736678696971}
   m_renderMode: 1

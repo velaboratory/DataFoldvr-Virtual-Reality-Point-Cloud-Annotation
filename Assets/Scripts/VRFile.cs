@@ -76,11 +76,10 @@ public class VRFile : MonoBehaviour
 	public TableFile tableFilePrefab;
 	public TextFile textFilePrefab;
 	public VideoFile videoFilePrefab;
-	public PDFFile pdfFilePrefab;
+
 	public PCDLoader pointCloudPrefab;
 	public List<TextFile> textInstances = new List<TextFile>();
 	public List<VideoFile> videoInstances = new List<VideoFile>();
-	public List<PDFFile> pdfInstances = new List<PDFFile>();
 	public List<TableFile> tableInstances = new List<TableFile>();
 
 	public List<PCDLoader> pointCloudInstances = new List<PCDLoader>();
@@ -572,26 +571,7 @@ public class VRFile : MonoBehaviour
 		pcd.transform.position = transform.position - offset;
 	}
 
-	IEnumerator loadPDFFile(string s)
-	{
-		content2D.gameObject.SetActive(false);
-		if (pdfInstances.Count == 0)
-		{
-			PDFFile pdf = Instantiate(pdfFilePrefab, transform.position, transform.rotation, content);
-			pdf.path = s;
-			pdf.updateContent();
-			pdfInstances.Add(pdf);
-		}
-		else
-		{
-			foreach (PDFFile p in pdfInstances)
-			{
-				p.updateContent();
-			}
-		}
-
-		yield return null;
-	}
+	
 
 	public void UpdateContents(string f, FolderManager folderManager)
 	{
@@ -643,9 +623,6 @@ public class VRFile : MonoBehaviour
 					break;
 				case FileType.image:
 					StartCoroutine(loadImageFile(f));
-					break;
-				case FileType.pdf:
-					StartCoroutine(loadPDFFile(f));
 					break;
 				case FileType.pcd:
 					StartCoroutine(loadPointCloud(f, data));
